@@ -1,0 +1,295 @@
+/* Pokedex Shell & Grid Page */
+body {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  background: var(--nes-black);
+  color: var(--screen-text);
+}
+
+/* === POKEDEX SHELL === */
+.pokedex-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--sp-4);
+}
+
+/* Top bar with indicator lights */
+.pokedex-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  background: var(--dex-red);
+  border-radius: var(--sp-2) var(--sp-2) 0 0;
+  box-shadow:
+    inset 0 -2px 0 var(--dex-red-dark),
+    inset 0 2px 0 var(--dex-red-light);
+}
+
+.indicator-big {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--nes-cyan);
+  border: 2px solid var(--nes-white);
+  box-shadow:
+    inset -4px -4px 0 rgba(0,0,0,0.2),
+    0 0 8px rgba(0, 232, 216, 0.5);
+}
+
+.indicator-small {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--nes-gray);
+}
+
+.indicator-red { background: var(--nes-red); }
+.indicator-yellow { background: var(--nes-yellow); }
+.indicator-green { background: var(--nes-green); }
+
+.pokedex-title {
+  font-size: var(--fs-lg);
+  color: var(--nes-white);
+  margin-left: auto;
+  text-shadow: 2px 2px 0 var(--dex-red-dark);
+}
+
+/* Main content area */
+.pokedex-body {
+  background: var(--dex-red);
+  padding: var(--sp-4);
+  box-shadow:
+    inset 0 -2px 0 var(--dex-red-dark),
+    inset 0 2px 0 var(--dex-red-light);
+}
+
+.pokedex-footer {
+  background: var(--dex-red);
+  padding: var(--sp-4);
+  border-radius: 0 0 var(--sp-2) var(--sp-2);
+  box-shadow:
+    inset 0 2px 0 var(--dex-red-light);
+  text-align: center;
+}
+
+.pokedex-footer a {
+  color: var(--nes-yellow);
+  font-size: var(--fs-xs);
+}
+
+.pokedex-footer a:hover {
+  text-decoration: underline;
+}
+
+/* === CONTROLS === */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+
+.controls input,
+.controls select,
+.controls button {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--screen-bg);
+  color: var(--screen-text);
+  border: 2px solid var(--screen-border);
+  outline: none;
+}
+
+.controls input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.controls input::placeholder {
+  color: var(--screen-bg-light);
+}
+
+.controls input:focus,
+.controls select:focus {
+  border-color: var(--screen-text);
+}
+
+.controls select {
+  cursor: pointer;
+}
+
+.controls button {
+  cursor: pointer;
+  background: var(--dex-red-dark);
+  color: var(--nes-white);
+  border-color: var(--dex-hinge);
+  transition: background 0.1s steps(2);
+}
+
+.controls button:hover {
+  background: var(--dex-red-light);
+}
+
+/* === CREATURE GRID === */
+.creature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--sp-3);
+}
+
+.creature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sp-3);
+  background: var(--screen-bg);
+  border: 2px solid var(--screen-bg-light);
+  cursor: pointer;
+  transition: transform 0.1s steps(2), border-color 0.1s steps(2);
+  text-align: center;
+}
+
+.creature-card:hover {
+  transform: scale(1.04);
+  border-color: var(--screen-text);
+}
+
+.creature-card .card-number {
+  font-size: var(--fs-xs);
+  color: var(--screen-bg-light);
+  margin-bottom: var(--sp-1);
+  align-self: flex-start;
+}
+
+.creature-card .card-sprite {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  margin-bottom: var(--sp-2);
+}
+
+.creature-card .card-name {
+  font-size: var(--fs-xs);
+  color: var(--screen-text-light);
+  margin-bottom: var(--sp-1);
+  line-height: 1.6;
+}
+
+.creature-card .card-pattern {
+  font-size: var(--fs-xs);
+  color: var(--screen-bg-light);
+  line-height: 1.4;
+}
+
+.creature-card .card-types {
+  display: flex;
+  gap: var(--sp-1);
+  margin-top: var(--sp-2);
+}
+
+/* Type badges */
+.type-badge {
+  display: inline-block;
+  padding: 2px var(--sp-2);
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--nes-white);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  border-radius: 2px;
+}
+
+/* Category badges */
+.category-badge {
+  display: inline-block;
+  padding: 2px var(--sp-2);
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--nes-white);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  border-radius: 2px;
+}
+
+.category-creational { background: var(--cat-creational); }
+.category-structural { background: var(--cat-structural); }
+.category-behavioral { background: var(--cat-behavioral); }
+
+/* No results */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--sp-8);
+  color: var(--screen-bg-light);
+  font-size: var(--fs-sm);
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: var(--sp-4);
+  margin-left: auto;
+}
+
+.nav-links a {
+  color: var(--nes-yellow);
+  font-size: var(--fs-xs);
+  transition: color 0.1s steps(2);
+}
+
+.nav-links a:hover {
+  color: var(--nes-white);
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  padding: var(--sp-8);
+  color: var(--screen-text);
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pokedex-shell {
+    padding: var(--sp-2);
+  }
+
+  .pokedex-top {
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    padding: var(--sp-3);
+  }
+
+  .pokedex-title {
+    font-size: var(--fs-md);
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+    order: -1;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .creature-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--sp-2);
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls input {
+    min-width: 100%;
+  }
+}

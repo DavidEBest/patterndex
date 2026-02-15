@@ -1,0 +1,281 @@
+/* Creature Detail Page */
+.creature-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+}
+
+/* Left column - Sprite & Basic Info */
+.creature-sprite-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.sprite-container {
+  width: 256px;
+  height: 256px;
+  background: var(--screen-bg);
+  border: var(--border-screen);
+  border-radius: var(--sp-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.sprite-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sprite-container svg {
+  width: 192px;
+  height: 192px;
+  image-rendering: pixelated;
+  position: relative;
+  z-index: 1;
+}
+
+.creature-header {
+  text-align: center;
+}
+
+.creature-number {
+  font-size: var(--fs-xs);
+  color: var(--screen-bg-light);
+  margin-bottom: var(--sp-1);
+}
+
+.creature-name {
+  font-size: var(--fs-lg);
+  color: var(--screen-text-light);
+  margin-bottom: var(--sp-2);
+}
+
+.creature-pattern {
+  font-size: var(--fs-sm);
+  color: var(--screen-text);
+  margin-bottom: var(--sp-2);
+}
+
+.creature-types {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+  margin-bottom: var(--sp-2);
+}
+
+.creature-types .type-badge {
+  font-size: var(--fs-xs);
+  padding: var(--sp-1) var(--sp-3);
+}
+
+.creature-category {
+  margin-bottom: var(--sp-2);
+}
+
+/* Stats Section */
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.stats-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.stat-label {
+  font-size: 7px;
+  color: var(--screen-bg-light);
+  width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.stat-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: var(--screen-bg);
+  border: 1px solid var(--screen-bg-light);
+  position: relative;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  transition: width 0.5s steps(10);
+}
+
+.stat-value {
+  font-size: 7px;
+  color: var(--screen-text);
+  width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Radar Chart */
+.radar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--sp-3);
+}
+
+.radar-container svg {
+  width: 200px;
+  height: 200px;
+}
+
+/* Right column - Educational Content */
+.creature-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.info-block {
+  background: rgba(0, 0, 0, 0.2);
+  padding: var(--sp-3);
+  border: 1px solid var(--screen-bg-light);
+}
+
+.info-block h3 {
+  font-size: var(--fs-xs);
+  color: var(--screen-text-light);
+  margin-bottom: var(--sp-2);
+  padding-bottom: var(--sp-1);
+  border-bottom: 1px solid var(--screen-bg-light);
+}
+
+.info-block p,
+.info-block li {
+  font-size: var(--fs-xs);
+  color: var(--screen-text);
+  line-height: 2;
+}
+
+.info-block ul {
+  padding-left: var(--sp-4);
+  list-style: none;
+}
+
+.info-block li::before {
+  content: '> ';
+  color: var(--screen-bg-light);
+}
+
+/* Code hint */
+.code-hint {
+  font-family: monospace;
+  font-size: var(--fs-xs);
+  background: var(--nes-black);
+  color: var(--nes-green);
+  padding: var(--sp-3);
+  border: 1px solid var(--screen-bg-light);
+  white-space: pre-wrap;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+/* Related Patterns */
+.related-patterns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.related-link {
+  display: inline-block;
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--screen-bg);
+  border: 1px solid var(--screen-bg-light);
+  font-size: 7px;
+  color: var(--screen-text);
+  cursor: pointer;
+  transition: border-color 0.1s steps(2);
+}
+
+.related-link:hover {
+  border-color: var(--screen-text);
+  color: var(--screen-text-light);
+}
+
+/* Back button */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  color: var(--nes-yellow);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--sp-2);
+}
+
+.back-btn:hover {
+  color: var(--nes-white);
+}
+
+/* Navigation arrows */
+.creature-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--sp-2) 0;
+}
+
+.creature-nav a {
+  font-size: var(--fs-xs);
+  color: var(--nes-yellow);
+  padding: var(--sp-1) var(--sp-2);
+}
+
+.creature-nav a:hover {
+  color: var(--nes-white);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .creature-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sprite-container {
+    width: 192px;
+    height: 192px;
+  }
+
+  .sprite-container svg {
+    width: 128px;
+    height: 128px;
+  }
+
+  .stat-label {
+    width: 60px;
+    font-size: 6px;
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patterndex - Design Patterns as Creatures</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/crt.css">
+  <link rel="stylesheet" href="css/pokedex.css">
+</head>
+<body>
+  <div class="pokedex-shell">
+    <header class="pokedex-top">
+      <div class="indicator-big"></div>
+      <div class="indicator-small indicator-red"></div>
+      <div class="indicator-small indicator-yellow"></div>
+      <div class="indicator-small indicator-green"></div>
+      <span class="pokedex-title">PATTERNDEX</span>
+      <nav class="nav-links">
+        <a href="index.html">BROWSE</a>
+        <a href="typechart.html">TYPES</a>
+      </nav>
+    </header>
+
+    <main class="pokedex-body">
+      <div class="crt-screen" style="padding: var(--sp-4); min-height: 400px;">
+        <div class="controls">
+          <input type="text" id="search" placeholder="SEARCH...">
+          <select id="filter-category">
+            <option value="">ALL CATEGORIES</option>
+            <option value="creational">CREATIONAL</option>
+            <option value="structural">STRUCTURAL</option>
+            <option value="behavioral">BEHAVIORAL</option>
+          </select>
+          <select id="filter-type">
+            <option value="">ALL TYPES</option>
+          </select>
+        </div>
+        <div class="creature-grid" id="creature-grid">
+          <div class="loading">LOADING...</div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="pokedex-footer">
+      <a href="https://github.com">24 DESIGN PATTERN CREATURES</a>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/types.js"></script>
+  <script src="js/svg-generator.js"></script>
+  <script src="js/pokedex.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('../fonts/press-start-2p.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Pokedex Shell */
+  --dex-red: #cc2222;
+  --dex-red-dark: #991111;
+  --dex-red-light: #ee4444;
+  --dex-hinge: #881111;
+
+  /* Screen */
+  --screen-bg: #0f380f;
+  --screen-bg-light: #306230;
+  --screen-text: #8bac0f;
+  --screen-text-light: #9bbc0f;
+  --screen-border: #222222;
+
+  /* NES-ish palette */
+  --nes-white: #fcfcfc;
+  --nes-black: #080808;
+  --nes-gray: #7c7c7c;
+  --nes-gray-light: #bcbcbc;
+  --nes-red: #a81000;
+  --nes-blue: #0058f8;
+  --nes-green: #00a800;
+  --nes-yellow: #f8d878;
+  --nes-orange: #f83800;
+  --nes-purple: #6844fc;
+  --nes-cyan: #00e8d8;
+  --nes-pink: #f878f8;
+
+  /* Type Colors */
+  --type-electric: #f8d030;
+  --type-fairy: #ee99ac;
+  --type-psychic: #f85888;
+  --type-steel: #b8b8d0;
+  --type-grass: #78c850;
+  --type-dragon: #7038f8;
+  --type-ghost: #705898;
+  --type-fire: #f08030;
+  --type-normal: #a8a878;
+  --type-bug: #a8b820;
+  --type-dark: #705848;
+  --type-water: #6890f0;
+  --type-fighting: #c03028;
+  --type-flying: #a890f0;
+  --type-poison: #a040a0;
+  --type-ice: #98d8d8;
+
+  /* Category Colors */
+  --cat-creational: #f08030;
+  --cat-structural: #6890f0;
+  --cat-behavioral: #78c850;
+
+  /* Spacing (4px grid) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* Typography */
+  --font-pixel: 'Press Start 2P', monospace;
+  --fs-xs: 8px;
+  --fs-sm: 10px;
+  --fs-md: 12px;
+  --fs-lg: 16px;
+  --fs-xl: 20px;
+
+  /* Pixel border helpers */
+  --border-light: 2px solid var(--nes-gray-light);
+  --border-dark: 2px solid var(--nes-black);
+  --border-screen: 4px solid var(--screen-border);
+}

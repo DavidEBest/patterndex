@@ -1,0 +1,158 @@
+/* Type Chart Page */
+.typechart-container {
+  padding: var(--sp-4);
+  overflow-x: auto;
+}
+
+.typechart-intro {
+  font-size: var(--fs-xs);
+  color: var(--screen-text);
+  line-height: 2;
+  margin-bottom: var(--sp-4);
+  text-align: center;
+}
+
+/* Chart Table */
+.type-chart-table {
+  border-collapse: collapse;
+  font-size: 7px;
+  margin: 0 auto;
+}
+
+.type-chart-table th,
+.type-chart-table td {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid var(--screen-bg-light);
+  padding: 2px;
+}
+
+.type-chart-table th {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--screen-text-light);
+  font-weight: normal;
+  font-size: 6px;
+}
+
+.type-chart-table th.row-header {
+  text-align: right;
+  padding-right: var(--sp-1);
+  width: auto;
+  white-space: nowrap;
+}
+
+.type-chart-table th.corner {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Effectiveness cells */
+.eff-super {
+  background: var(--nes-green);
+  color: var(--nes-white);
+  font-weight: bold;
+}
+
+.eff-not-very {
+  background: var(--nes-red);
+  color: var(--nes-white);
+}
+
+.eff-neutral {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--screen-bg-light);
+}
+
+.eff-immune {
+  background: var(--nes-black);
+  color: var(--nes-gray);
+}
+
+/* Hover tooltip */
+.chart-tooltip {
+  position: fixed;
+  background: var(--nes-black);
+  border: 2px solid var(--screen-text);
+  color: var(--screen-text);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  padding: var(--sp-2) var(--sp-3);
+  pointer-events: none;
+  z-index: 100;
+  max-width: 300px;
+  line-height: 2;
+  display: none;
+}
+
+.chart-tooltip.visible {
+  display: block;
+}
+
+/* Legend */
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.legend-swatch {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--screen-bg-light);
+}
+
+/* Type descriptions list */
+.type-descriptions {
+  margin-top: var(--sp-8);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-3);
+}
+
+.type-desc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--screen-bg-light);
+}
+
+.type-desc-item .type-badge {
+  flex-shrink: 0;
+}
+
+.type-desc-item p {
+  font-size: 7px;
+  color: var(--screen-text);
+  line-height: 1.8;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .type-chart-table th,
+  .type-chart-table td {
+    width: 24px;
+    height: 24px;
+    font-size: 5px;
+  }
+
+  .type-chart-table th {
+    font-size: 5px;
+  }
+
+  .type-descriptions {
+    grid-template-columns: 1fr;
+  }
+}

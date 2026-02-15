@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patterndex - Creature</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/crt.css">
+  <link rel="stylesheet" href="css/pokedex.css">
+  <link rel="stylesheet" href="css/creature.css">
+</head>
+<body>
+  <div class="pokedex-shell">
+    <header class="pokedex-top">
+      <div class="indicator-big"></div>
+      <div class="indicator-small indicator-red"></div>
+      <div class="indicator-small indicator-yellow"></div>
+      <div class="indicator-small indicator-green"></div>
+      <span class="pokedex-title">PATTERNDEX</span>
+      <nav class="nav-links">
+        <a href="index.html">BROWSE</a>
+        <a href="typechart.html">TYPES</a>
+      </nav>
+    </header>
+
+    <main class="pokedex-body">
+      <div class="crt-screen" style="padding: var(--sp-4); min-height: 400px;">
+        <div id="creature-detail">
+          <div class="loading">LOADING...</div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="pokedex-footer">
+      <a href="index.html">&lt; BACK TO DEX</a>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/types.js"></script>
+  <script src="js/svg-generator.js"></script>
+  <script src="js/creature.js"></script>
+</body>
+</html>
