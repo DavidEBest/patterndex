@@ -1,4 +1,4 @@
-/* Pokedex Shell & Grid Page */
+/* Dex Shell & Grid Page */
 body {
   font-family: var(--font-pixel);
   font-size: var(--fs-sm);
@@ -6,15 +6,15 @@ body {
   color: var(--screen-text);
 }
 
-/* === POKEDEX SHELL === */
-.pokedex-shell {
+/* === DEX SHELL === */
+.dex-shell {
   max-width: 960px;
   margin: 0 auto;
   padding: var(--sp-4);
 }
 
 /* Top bar with indicator lights */
-.pokedex-top {
+.dex-top {
   display: flex;
   align-items: center;
   gap: var(--sp-3);
@@ -27,9 +27,9 @@ body {
 }
 
 .indicator-big {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
   background: var(--nes-cyan);
   border: 2px solid var(--nes-white);
   box-shadow:
@@ -38,9 +38,9 @@ body {
 }
 
 .indicator-small {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: 20px;
+  height: 8px;
+  border-radius: 2px;
   border: 2px solid var(--nes-gray);
 }
 
@@ -48,7 +48,7 @@ body {
 .indicator-yellow { background: var(--nes-yellow); }
 .indicator-green { background: var(--nes-green); }
 
-.pokedex-title {
+.dex-title {
   font-size: var(--fs-lg);
   color: var(--nes-white);
   margin-left: auto;
@@ -56,7 +56,7 @@ body {
 }
 
 /* Main content area */
-.pokedex-body {
+.dex-body {
   background: var(--dex-red);
   padding: var(--sp-4);
   box-shadow:
@@ -64,7 +64,7 @@ body {
     inset 0 2px 0 var(--dex-red-light);
 }
 
-.pokedex-footer {
+.dex-footer {
   background: var(--dex-red);
   padding: var(--sp-4);
   border-radius: 0 0 var(--sp-2) var(--sp-2);
@@ -73,12 +73,12 @@ body {
   text-align: center;
 }
 
-.pokedex-footer a {
+.dex-footer a {
   color: var(--nes-yellow);
   font-size: var(--fs-xs);
 }
 
-.pokedex-footer a:hover {
+.dex-footer a:hover {
   text-decoration: underline;
 }
 
@@ -164,8 +164,8 @@ body {
 }
 
 .creature-card .card-sprite {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   image-rendering: pixelated;
   margin-bottom: var(--sp-2);
 }
@@ -256,17 +256,17 @@ body {
 
 /* Responsive */
 @media (max-width: 600px) {
-  .pokedex-shell {
+  .dex-shell {
     padding: var(--sp-2);
   }
 
-  .pokedex-top {
+  .dex-top {
     flex-wrap: wrap;
     gap: var(--sp-2);
     padding: var(--sp-3);
   }
 
-  .pokedex-title {
+  .dex-title {
     font-size: var(--fs-md);
     width: 100%;
     text-align: center;

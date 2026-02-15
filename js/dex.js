@@ -1,5 +1,5 @@
 /**
- * Pokedex Grid Page - renders creature cards with filtering
+ * Patterndex Grid Page - renders creature cards with filtering
  */
 (function() {
   const data = window.PATTERNDEX_DATA;
@@ -34,8 +34,8 @@
     const sprite = document.createElement('div');
     sprite.className = 'card-sprite';
     sprite.innerHTML = svg.generate(creature);
-    sprite.querySelector('svg').style.width = '64px';
-    sprite.querySelector('svg').style.height = '64px';
+    sprite.querySelector('svg').style.width = '80px';
+    sprite.querySelector('svg').style.height = '80px';
     sprite.querySelector('svg').style.imageRendering = 'pixelated';
 
     const name = document.createElement('div');
