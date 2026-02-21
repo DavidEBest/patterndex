@@ -99,8 +99,7 @@
           <div class="creature-category" id="creature-category"></div>
         </div>
 
-        <div class="sprite-container">
-          ${svg.generate(creature)}
+        <div class="sprite-container" id="sprite-container">
         </div>
 
         <div class="radar-container">
@@ -158,6 +157,10 @@
 
     ${renderNav()}
   `;
+
+  // Add sprite (PNG with SVG fallback)
+  const spriteContainer = document.getElementById('sprite-container');
+  spriteContainer.appendChild(types.createSprite(creature, 192, { lightbox: true }));
 
   // Add type badges via DOM
   const typesContainer = document.getElementById('creature-types');

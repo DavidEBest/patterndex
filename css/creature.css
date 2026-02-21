@@ -43,7 +43,8 @@
   z-index: 2;
 }
 
-.sprite-container svg {
+.sprite-container svg,
+.sprite-container img {
   width: 192px;
   height: 192px;
   image-rendering: pixelated;

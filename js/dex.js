@@ -33,10 +33,7 @@
 
     const sprite = document.createElement('div');
     sprite.className = 'card-sprite';
-    sprite.innerHTML = svg.generate(creature);
-    sprite.querySelector('svg').style.width = '80px';
-    sprite.querySelector('svg').style.height = '80px';
-    sprite.querySelector('svg').style.imageRendering = 'pixelated';
+    sprite.appendChild(types.createSprite(creature, 80));
 
     const name = document.createElement('div');
     name.className = 'card-name';

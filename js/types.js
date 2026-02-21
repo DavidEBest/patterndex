@@ -54,6 +54,94 @@ window.PatterndexTypes = (() => {
     return Object.keys(data.types);
   }
 
+  /** Get the PNG image path for a creature (generated art) */
+  function getImagePath(creature) {
+    return `img/${creature.id}-${creature.name.toLowerCase()}.png`;
+  }
+
+  /**
+   * Create a sprite element: tries PNG first, falls back to SVG.
+   * Clicking opens a lightbox with the full-size image.
+   */
+  function createSprite(creature, size, opts) {
+    const clickable = opts && opts.lightbox;
+    const img = document.createElement('img');
+    img.src = getImagePath(creature);
+    img.alt = creature.name;
+    img.width = size;
+    img.height = size;
+    img.style.imageRendering = 'pixelated';
+    img.className = 'creature-sprite-img';
+    if (clickable) {
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openLightbox(creature);
+      });
+    }
+    // On error, fall back to SVG
+    img.onerror = function() {
+      const div = document.createElement('div');
+      div.innerHTML = window.SvgGenerator.generate(creature);
+      const svgEl = div.querySelector('svg');
+      svgEl.style.width = size + 'px';
+      svgEl.style.height = size + 'px';
+      svgEl.style.imageRendering = 'pixelated';
+      if (clickable) {
+        svgEl.style.cursor = 'pointer';
+        svgEl.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(creature);
+        });
+      }
+      img.replaceWith(svgEl);
+    };
+    return img;
+  }
+
+  // Lightbox singleton
+  let lightboxEl = null;
+
+  function getLightbox() {
+    if (lightboxEl) return lightboxEl;
+    lightboxEl = document.createElement('div');
+    lightboxEl.className = 'lightbox';
+    lightboxEl.innerHTML = '<span class="lightbox-hint">CLICK TO CLOSE</span>';
+    lightboxEl.addEventListener('click', () => {
+      lightboxEl.classList.remove('open');
+      lightboxEl.querySelectorAll('img, svg').forEach(el => el.remove());
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        lightboxEl.classList.remove('open');
+        lightboxEl.querySelectorAll('img, svg').forEach(el => el.remove());
+      }
+    });
+    document.body.appendChild(lightboxEl);
+    return lightboxEl;
+  }
+
+  function openLightbox(creature) {
+    const box = getLightbox();
+    // Remove any previous image
+    box.querySelectorAll('img, svg').forEach(el => el.remove());
+    const img = document.createElement('img');
+    img.src = getImagePath(creature);
+    img.alt = creature.name;
+    img.style.imageRendering = 'pixelated';
+    img.onerror = function() {
+      const div = document.createElement('div');
+      div.innerHTML = window.SvgGenerator.generate(creature);
+      const svgEl = div.querySelector('svg');
+      svgEl.style.imageRendering = 'pixelated';
+      img.replaceWith(svgEl);
+    };
+    box.prepend(img);
+    box.classList.add('open');
+  }
+
   return {
     getTypeColor,
     getTypeName,
@@ -63,6 +151,8 @@ window.PatterndexTypes = (() => {
     getEffectiveness,
     getCategoryColor,
     getCreatureById,
-    getAllTypes
+    getAllTypes,
+    getImagePath,
+    createSprite
   };
 })();

@@ -52,3 +52,35 @@
   position: relative;
   z-index: 1;
 }
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox img,
+.lightbox svg {
+  max-width: 90vmin;
+  max-height: 90vmin;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 24px rgba(139, 172, 15, 0.3));
+}
+
+.lightbox-hint {
+  position: absolute;
+  bottom: var(--sp-6);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  color: var(--screen-bg-light);
+}
