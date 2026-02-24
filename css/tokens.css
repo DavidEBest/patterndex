@@ -56,6 +56,7 @@
   --cat-creational: #f08030;
   --cat-structural: #6890f0;
   --cat-behavioral: #78c850;
+  --cat-architectural: #c07830;
 
   /* Spacing (4px grid) */
   --sp-1: 4px;

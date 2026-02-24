@@ -214,6 +214,7 @@ body {
 .category-creational { background: var(--cat-creational); }
 .category-structural { background: var(--cat-structural); }
 .category-behavioral { background: var(--cat-behavioral); }
+.category-architectural { background: var(--cat-architectural); }
 
 /* No results */
 .no-results {

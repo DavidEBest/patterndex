@@ -41,7 +41,8 @@ window.PatterndexTypes = (() => {
     const colors = {
       creational: '#f08030',
       structural: '#6890f0',
-      behavioral: '#78c850'
+      behavioral: '#78c850',
+      architectural: '#c07830'
     };
     return colors[category] || '#888888';
   }

@@ -433,6 +433,24 @@ window.PATTERNDEX_DATA = {
       codeHint: 'class CircleData {\n  constructor(\n    private _radius: number,\n    private _color: string,\n    private _origin: Point\n  ) {}\n  get radius() { return this._radius; }\n  get color() { return this._color; }\n  get origin() { return this._origin; }\n}\n\nclass Circle {\n  private data: CircleData;\n  constructor(r, c, o) {\n    this.data = new CircleData(r, c, o);\n  }\n}',
       participants: ['MainClass', 'DataClass'],
       related: ['005', '018']
+    },
+
+    // ===== ARCHITECTURAL (025+) =====
+    {
+      id: '025',
+      name: 'Stranglor',
+      pattern: 'Strangler Fig',
+      category: 'architectural',
+      types: ['grass', 'ghost'],
+      stats: { complexity: 7, flexibility: 9, decoupling: 9, abstraction: 7, performance: 6, popularity: 8 },
+      visual: { body: 'serpentine', features: ['aura', 'tail'], accent: 'markings' },
+      intent: 'Incrementally migrate a legacy system by gradually replacing specific pieces of functionality with new applications and services until the old system is completely replaced.',
+      problem: 'You have a large monolithic legacy system that needs to be modernized, but a full rewrite is too risky and expensive. The system must keep running during migration.',
+      solution: 'Create a facade (the "fig") that intercepts calls to the legacy system. Gradually implement new functionality behind the facade. Route requests to new code when ready, falling back to the old system. Over time the new system grows around the old one until the legacy code can be removed entirely.',
+      analogy: 'A strangler fig tree in the rainforest. It starts as a small vine growing on a host tree, gradually wrapping around it and growing its own roots. Eventually the fig completely envelops the host, which dies and decomposes, leaving the fig standing in its place.',
+      codeHint: 'class OrderService {\n  constructor(\n    private legacy: LegacyOrderSystem,\n    private modern: ModernOrderAPI,\n    private flags: FeatureFlags\n  ) {}\n\n  getOrder(id: string): Order {\n    if (this.flags.isEnabled(\n      \'modern-orders\')) {\n      return this.modern.getOrder(id);\n    }\n    return this.legacy.getOrder(id);\n  }\n\n  // Migrate endpoint by endpoint...\n}',
+      participants: ['Facade/Proxy', 'Legacy System', 'New System', 'Router/Feature Flags'],
+      related: ['010', '012', '006']
     }
   ]
 };
