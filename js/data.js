@@ -451,6 +451,54 @@ window.PATTERNDEX_DATA = {
       codeHint: 'class OrderService {\n  constructor(\n    private legacy: LegacyOrderSystem,\n    private modern: ModernOrderAPI,\n    private flags: FeatureFlags\n  ) {}\n\n  getOrder(id: string): Order {\n    if (this.flags.isEnabled(\n      \'modern-orders\')) {\n      return this.modern.getOrder(id);\n    }\n    return this.legacy.getOrder(id);\n  }\n\n  // Migrate endpoint by endpoint...\n}',
       participants: ['Facade/Proxy', 'Legacy System', 'New System', 'Router/Feature Flags'],
       related: ['010', '012', '006']
+    },
+    {
+      id: '026',
+      name: 'Splitclaw',
+      pattern: 'CQRS',
+      category: 'architectural',
+      types: ['psychic', 'fighting'],
+      stats: { complexity: 8, flexibility: 9, decoupling: 10, abstraction: 8, performance: 8, popularity: 8 },
+      visual: { body: 'multi', features: ['horns', 'claws'], accent: 'aura' },
+      intent: 'Separate read and write operations into different models, allowing each to be optimized, scaled, and evolved independently.',
+      problem: 'A single data model serves both reads and writes, but their requirements differ dramatically. Reads need denormalized views for speed; writes need normalized models for consistency. Optimizing for one hurts the other.',
+      solution: 'Split the application into a Command side (writes/mutations) and a Query side (reads/projections). Commands update the write model and publish events. The read model is built from these events, optimized for query patterns.',
+      analogy: 'A restaurant kitchen. Orders go in one window (command), food comes out another (query). The kitchen (write model) is organized for cooking efficiency, while the serving counter (read model) is organized for quick pickup. Different optimizations, same data.',
+      codeHint: '// Command side\nclass CreateOrderCommand {\n  constructor(\n    public items: Item[],\n    public userId: string\n  ) {}\n}\n\nclass CommandHandler {\n  handle(cmd: CreateOrderCommand) {\n    const order = Order.create(cmd);\n    this.repo.save(order);\n    this.bus.publish(\n      new OrderCreatedEvent(order));\n  }\n}\n\n// Query side\nclass OrderQueryService {\n  getOrderSummary(id: string) {\n    return this.readDb\n      .query(\'SELECT * FROM\n        order_views WHERE id=?\',\n        [id]);\n  }\n}',
+      participants: ['Command', 'Command Handler', 'Write Model', 'Event Bus', 'Query Model', 'Query Handler', 'Projection'],
+      related: ['027', '014', '019']
+    },
+    {
+      id: '027',
+      name: 'Chronolith',
+      pattern: 'Event Sourcing',
+      category: 'architectural',
+      types: ['ice', 'water'],
+      stats: { complexity: 9, flexibility: 8, decoupling: 8, abstraction: 8, performance: 5, popularity: 7 },
+      visual: { body: 'tall', features: ['shield', 'aura', 'markings'], accent: 'horns' },
+      intent: 'Store state changes as a sequence of immutable events rather than overwriting current state. Rebuild current state by replaying events from the beginning.',
+      problem: 'Traditional CRUD overwrites data, losing the history of how you got to the current state. You can\'t answer "what happened?" or rebuild past states. Audit trails are bolted on and unreliable.',
+      solution: 'Persist every state change as an immutable event in an append-only store. The current state is derived by replaying all events. Snapshots can optimize replay performance. Events become the single source of truth.',
+      analogy: 'A bank ledger. Instead of just showing your current balance ($500), it records every transaction: +$1000 deposit, -$200 rent, -$300 groceries. You can always reconstruct any past balance and have a complete audit trail.',
+      codeHint: 'class EventStore {\n  private events: Event[] = [];\n\n  append(event: Event) {\n    event.timestamp = Date.now();\n    event.version = this.events.length;\n    this.events.push(\n      Object.freeze(event));\n  }\n\n  getEvents(aggregateId: string) {\n    return this.events.filter(\n      e => e.aggregateId === id);\n  }\n}\n\n// Rebuild state\nfunction rebuild(events: Event[]) {\n  return events.reduce(\n    (state, event) =>\n      applyEvent(state, event),\n    initialState);\n}',
+      participants: ['Event Store', 'Event', 'Aggregate', 'Snapshot', 'Projection', 'Event Handler'],
+      related: ['026', '018', '016']
+    },
+    {
+      id: '028',
+      name: 'Breakerus',
+      pattern: 'Circuit Breaker',
+      category: 'architectural',
+      types: ['electric', 'steel'],
+      stats: { complexity: 5, flexibility: 6, decoupling: 7, abstraction: 5, performance: 8, popularity: 9 },
+      visual: { body: 'angular', features: ['shield', 'aura'], accent: 'horns' },
+      intent: 'Prevent cascading failures in distributed systems by detecting failures and temporarily stopping requests to a failing service, giving it time to recover.',
+      problem: 'In a distributed system, one failing service can cause callers to hang waiting for timeouts, exhausting resources and cascading the failure across the entire system.',
+      solution: 'Wrap calls to external services in a circuit breaker. Track failures: when they exceed a threshold, "open" the circuit and fail fast without calling the service. After a timeout, allow a test request through ("half-open"). If it succeeds, close the circuit; if not, stay open.',
+      analogy: 'An electrical circuit breaker in your home. When it detects a dangerous current overload, it trips and cuts the circuit to prevent a fire. You can reset it once the problem is fixed, and electricity flows again.',
+      codeHint: 'class CircuitBreaker {\n  private failures = 0;\n  private state = \'CLOSED\';\n  private nextRetry = 0;\n\n  async call(fn: () => Promise<T>) {\n    if (this.state === \'OPEN\') {\n      if (Date.now() < this.nextRetry)\n        throw new CircuitOpenError();\n      this.state = \'HALF_OPEN\';\n    }\n    try {\n      const result = await fn();\n      this.onSuccess();\n      return result;\n    } catch (e) {\n      this.onFailure();\n      throw e;\n    }\n  }\n\n  private onFailure() {\n    this.failures++;\n    if (this.failures >= this.threshold)\n      this.trip();\n  }\n\n  private trip() {\n    this.state = \'OPEN\';\n    this.nextRetry =\n      Date.now() + this.timeout;\n  }\n}',
+      participants: ['Circuit Breaker', 'Service', 'Client', 'Fallback', 'Monitor'],
+      related: ['012', '020', '025']
     }
   ]
 };
