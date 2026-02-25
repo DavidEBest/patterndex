@@ -499,6 +499,54 @@ window.PATTERNDEX_DATA = {
       codeHint: 'class CircuitBreaker {\n  private failures = 0;\n  private state = \'CLOSED\';\n  private nextRetry = 0;\n\n  async call(fn: () => Promise<T>) {\n    if (this.state === \'OPEN\') {\n      if (Date.now() < this.nextRetry)\n        throw new CircuitOpenError();\n      this.state = \'HALF_OPEN\';\n    }\n    try {\n      const result = await fn();\n      this.onSuccess();\n      return result;\n    } catch (e) {\n      this.onFailure();\n      throw e;\n    }\n  }\n\n  private onFailure() {\n    this.failures++;\n    if (this.failures >= this.threshold)\n      this.trip();\n  }\n\n  private trip() {\n    this.state = \'OPEN\';\n    this.nextRetry =\n      Date.now() + this.timeout;\n  }\n}',
       participants: ['Circuit Breaker', 'Service', 'Client', 'Fallback', 'Monitor'],
       related: ['012', '020', '025']
+    },
+    {
+      id: '029',
+      name: 'Sagamaw',
+      pattern: 'Saga',
+      category: 'architectural',
+      types: ['water', 'dark'],
+      stats: { complexity: 9, flexibility: 7, decoupling: 8, abstraction: 7, performance: 5, popularity: 8 },
+      visual: { body: 'serpentine', features: ['horns', 'markings'], accent: 'tail' },
+      intent: 'Manage distributed transactions across multiple services by breaking them into a sequence of local transactions, each with a compensating action for rollback.',
+      problem: 'In a microservices architecture, a business operation spans multiple services. Traditional ACID transactions don\'t work across service boundaries, so you need a way to maintain data consistency.',
+      solution: 'Break the distributed transaction into a sequence of local transactions (saga steps). Each step has a compensating transaction that undoes its work. If any step fails, execute compensations in reverse order. Can be orchestrated (central coordinator) or choreographed (event-driven).',
+      analogy: 'Planning a vacation with multiple bookings. You book a flight, then a hotel, then a car rental. If the car rental fails, you cancel the hotel, then cancel the flight — unwinding each step in reverse order to get back to a clean state.',
+      codeHint: 'class BookTripSaga {\n  steps = [\n    {\n      action: () =>\n        flightService.book(flight),\n      compensate: () =>\n        flightService.cancel(flight)\n    },\n    {\n      action: () =>\n        hotelService.book(hotel),\n      compensate: () =>\n        hotelService.cancel(hotel)\n    },\n    {\n      action: () =>\n        carService.book(car),\n      compensate: () =>\n        carService.cancel(car)\n    }\n  ];\n\n  async execute() {\n    const completed = [];\n    for (const step of this.steps) {\n      try {\n        await step.action();\n        completed.push(step);\n      } catch (e) {\n        // Compensate in reverse\n        for (const s of\n          completed.reverse())\n          await s.compensate();\n        throw e;\n      }\n    }\n  }\n}',
+      participants: ['Saga Orchestrator', 'Saga Step', 'Compensating Transaction', 'Participant Services', 'Event Bus'],
+      related: ['013', '027', '028']
+    },
+    {
+      id: '030',
+      name: 'Sidekix',
+      pattern: 'Sidecar',
+      category: 'architectural',
+      types: ['bug', 'normal'],
+      stats: { complexity: 4, flexibility: 8, decoupling: 9, abstraction: 5, performance: 7, popularity: 8 },
+      visual: { body: 'multi', features: ['antennae', 'wings'], accent: 'markings' },
+      intent: 'Deploy helper components alongside a service in a separate process or container, providing supporting features like logging, monitoring, configuration, and networking without changing the service itself.',
+      problem: 'Cross-cutting concerns (logging, metrics, TLS, retries) need to be added to every service. Embedding them couples infrastructure to business logic and requires changes in every service\'s codebase and language.',
+      solution: 'Deploy a companion "sidecar" process alongside each service instance. The sidecar handles cross-cutting concerns transparently. The service communicates with it over localhost. The sidecar can be updated independently and works with any language.',
+      analogy: 'A motorcycle sidecar. The motorcycle (your service) focuses on driving. The sidecar (companion) rides alongside, carrying extra gear, handling navigation, or providing a turret — all without modifying the motorcycle itself.',
+      codeHint: '# docker-compose.yml\nservices:\n  order-service:\n    image: order-api:latest\n    ports: [\"8080:8080\"]\n\n  # Sidecar handles networking\n  order-proxy:\n    image: envoy-proxy:latest\n    network_mode:\n      \"service:order-service\"\n    volumes:\n      - ./envoy.yaml:/etc/envoy\n\n  # Sidecar handles logging\n  order-logger:\n    image: fluentd:latest\n    network_mode:\n      \"service:order-service\"\n    volumes:\n      - logs:/var/log/app',
+      participants: ['Primary Service', 'Sidecar', 'Shared Lifecycle', 'Platform/Orchestrator'],
+      related: ['009', '012', '006']
+    },
+    {
+      id: '031',
+      name: 'Bulkard',
+      pattern: 'Bulkhead',
+      category: 'architectural',
+      types: ['water', 'steel'],
+      stats: { complexity: 5, flexibility: 6, decoupling: 8, abstraction: 5, performance: 7, popularity: 7 },
+      visual: { body: 'wide', features: ['shield', 'markings'], accent: 'aura' },
+      intent: 'Isolate elements of an application into pools so that if one fails, the others continue to function. Prevent a failure in one component from cascading to others.',
+      problem: 'A single slow or failing dependency can consume all available resources (threads, connections, memory), causing the entire application to become unresponsive even for unrelated requests.',
+      solution: 'Partition resources into isolated pools (bulkheads). Each external dependency or critical component gets its own pool of threads, connections, or instances. If one pool is exhausted, others continue operating normally.',
+      analogy: 'Watertight compartments in a ship\'s hull. If one compartment floods, the bulkhead walls contain the water to that section. The rest of the ship stays afloat. The Titanic didn\'t have enough of them.',
+      codeHint: 'class BulkheadExecutor {\n  private pools = new Map();\n\n  register(name: string,\n    maxConcurrent: number) {\n    this.pools.set(name, {\n      max: maxConcurrent,\n      active: 0,\n      queue: []\n    });\n  }\n\n  async execute(pool: string,\n    fn: () => Promise<T>): T {\n    const p = this.pools.get(pool);\n    if (p.active >= p.max)\n      throw new BulkheadFullError(\n        pool);\n    p.active++;\n    try {\n      return await fn();\n    } finally {\n      p.active--;\n    }\n  }\n}\n\n// Usage\nbulkhead.register(\'payments\', 10);\nbulkhead.register(\'search\', 20);\nbulkhead.register(\'email\', 5);',
+      participants: ['Bulkhead', 'Resource Pool', 'Service', 'Client', 'Monitor'],
+      related: ['028', '011', '010']
     }
   ]
 };
